@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Segmentation AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg class="brain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a4 4 0 0 0-4 4c0 1.1.45 2.1 1.17 2.83A6 6 0 0 0 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6a6 6 0 0 0-3.17-5.17A4 4 0 0 0 12 2z"/>
+                    <path d="M12 6v8"/>
+                    <path d="M9 10h6"/>
+                </svg>
+                <h1>Brain Tumor Segmentation</h1>
+            </div>
+            <p class="subtitle">AI-Powered Medical Image Analysis</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section" id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17,8 12,3 7,8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <h2>Upload MRI Scan</h2>
+                    <p>Drag and drop your MRI image here, or click to browse</p>
+                    <p class="file-types">Supported formats: PNG, JPG, JPEG, BMP, TIFF</p>
+                    <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.bmp,.tiff,.gif" hidden>
+                    <button class="btn btn-primary" id="browseBtn">Browse Files</button>
+                </div>
+                
+                <!-- Preview Area -->
+                <div class="preview-area hidden" id="previewArea">
+                    <div class="preview-image-container">
+                        <img id="previewImage" src="" alt="Preview">
+                    </div>
+                    <div class="preview-info">
+                        <p id="fileName">filename.png</p>
+                        <div class="preview-actions">
+                            <button class="btn btn-secondary" id="changeBtn">Change Image</button>
+                            <button class="btn btn-primary" id="analyzeBtn">
+                                <span class="btn-text">Analyze</span>
+                                <span class="btn-loader hidden">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section hidden" id="resultsSection">
+                <h2>Analysis Results</h2>
+                
+                <!-- Status Banner -->
+                <div class="status-banner" id="statusBanner">
+                    <div class="status-icon" id="statusIcon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4"/>
+                            <path d="M12 16h.01"/>
+                        </svg>
+                    </div>
+                    <div class="status-text">
+                        <h3 id="statusTitle">Analyzing...</h3>
+                        <p id="statusDescription">Processing your MRI scan</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid" id="metricsGrid">
+                    <div class="metric-card">
+                        <div class="metric-label">Confidence Score</div>
+                        <div class="metric-value" id="confidenceValue">--</div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill" id="confidenceBar"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Tumor Coverage</div>
+                        <div class="metric-value" id="tumorRatioValue">--</div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill" id="tumorRatioBar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images Display -->
+                <div class="images-display" id="imagesDisplay">
+                    <div class="image-card">
+                        <h3>Original MRI</h3>
+                        <div class="image-container">
+                            <img id="resultOriginal" src="" alt="Original MRI">
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <h3>Segmentation Mask</h3>
+                        <div class="image-container">
+                            <img id="resultMask" src="" alt="Segmentation Mask">
+                        </div>
+                    </div>
+                    <div class="image-card featured">
+                        <h3>Overlay Visualization</h3>
+                        <div class="image-container">
+                            <img id="resultOverlay" src="" alt="Overlay">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="result-actions">
+                    <button class="btn btn-secondary" id="newAnalysisBtn">New Analysis</button>
+                    <button class="btn btn-primary" id="downloadBtn">Download Results</button>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <section class="error-section hidden" id="errorSection">
+                <div class="error-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                </div>
+                <h3>Analysis Error</h3>
+                <p id="errorMessage">An error occurred during analysis.</p>
+                <button class="btn btn-primary" id="retryBtn">Try Again</button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="disclaimer">
+                    <strong>Medical Disclaimer:</strong> This tool is for research and educational purposes only. 
+                    It should not be used as a substitute for professional medical diagnosis or treatment.
+                </p>
+                <div class="footer-info">
+                    <span>Powered by U-Net Deep Learning</span>
+                    <span class="separator">|</span>
+                    <span>BRATS Dataset</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

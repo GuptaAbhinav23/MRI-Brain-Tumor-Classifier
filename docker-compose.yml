@@ -1,0 +1,54 @@
+# Docker Compose for Brain Tumor Segmentation
+# =============================================
+# Easy local development and deployment
+
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - FLASK_DEBUG=false
+      - MODEL_PATH=model.pth
+      - LOG_LEVEL=info
+      - GUNICORN_WORKERS=2
+    volumes:
+      # Mount model file for easy updates
+      - ./model.pth:/app/model.pth:ro
+      # Mount outputs for accessing training results
+      - ./outputs:/app/outputs:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Optional: Development service with auto-reload
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    environment:
+      - PORT=5000
+      - FLASK_DEBUG=true
+      - MODEL_PATH=model.pth
+    volumes:
+      - .:/app
+    command: python app.py
+    profiles:
+      - dev

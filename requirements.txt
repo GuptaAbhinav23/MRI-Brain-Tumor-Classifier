@@ -1,0 +1,37 @@
+# Brain Tumor Segmentation Project
+# Python Dependencies
+
+# Core ML Framework
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Deep Learning Utilities
+scikit-learn>=1.2.0
+numpy>=1.24.0
+
+# Medical Imaging
+nibabel>=5.0.0
+
+# Image Processing
+opencv-python>=4.7.0
+Pillow>=9.4.0
+
+# Web Framework
+Flask>=2.3.0
+gunicorn>=21.0.0
+
+# Data Processing
+pandas>=2.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Progress Bar
+tqdm>=4.65.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# Production Server
+waitress>=2.1.0
