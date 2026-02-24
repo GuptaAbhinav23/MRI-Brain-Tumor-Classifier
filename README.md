@@ -476,5 +476,6 @@ For questions or support, please open an issue on GitHub.
 <p align="center">
   Made with ❤️ for Medical AI Research
 </p>
-#   M R I - B r a i n - T u m o r - C l a s s i f i e r  
+#   M R I - B r a i n - T u m o r - C l a s s i f i e r 
+ 
  
